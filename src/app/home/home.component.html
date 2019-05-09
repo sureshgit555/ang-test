@@ -1,0 +1,67 @@
+<div class="col-md-12 text-center">
+    <h1>Welcome to dashboard</h1>
+</div> 
+<h1>List</h1>
+<div>
+    <table border='1' width='100%' style='border-collapse: collapse;'>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th> 
+            <th></th> 
+        </tr>
+        <tr *ngFor="let player of players">
+            <td>{{ player.id }}</td>
+            <td>{{ player.first_name }}</td>
+            <td>{{ player.last_name }}</td>
+            <td>
+                <button  type="button" class="btn" (click)="openModal(player,template)"><i class="fa fa-times"></i> </button> 
+                <button type="button" class="btn" (click)="showPlayer(player.id)"><i class="fa fa-pencil"></i></button>     
+
+            </td>
+        </tr>
+    </table>
+    <br>
+    <div class="">
+
+    </div>
+
+    <form #fparams = "ngForm"   [formGroup]="registerForm" (ngSubmit) ="createOrUpdatePolicy(fparams)"   >
+
+        <div class="form-group">
+            <label >First Name</label>           
+            <input type="text" formControlName="first_name"  
+                   class="form-control"                     
+                   [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }">
+
+                   <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
+                   <div *ngIf="f.first_name.errors.required">First Name is required</div>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label >Last Name</label>           
+            <input type="text" formControlName="last_name"  
+                   class="form-control"                     
+                   [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }">
+
+                   <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
+                   <div *ngIf="f.last_name.errors.required">Last Name is required</div>
+            </div>
+        </div>     
+        <button type="submit" class="btn btn-success">Save</button>   
+    </form>
+</div>
+
+
+<!--Modals -->
+<ng-template #template>
+    <div class="modal-body text-center">
+        <p>Do you want to confirm?</p>
+        <button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>
+        <button type="button" class="btn btn-primary" (click)="decline()" >No</button>
+    </div>
+</ng-template>
+
+
